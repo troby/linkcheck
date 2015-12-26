@@ -22,11 +22,13 @@ except:
   sys.exit(1)
 
 # test uri pruning
-mysite.prune_uris(list)
-assert len(mysite.pruned) == 4
-assert 'http://site.com/link.html' in mysite.pruned
-assert 'http://site.com/site.html' in mysite.pruned
-assert 'https://site.com/index.html' in mysite.pruned
-assert 'http://mysite.com/static.html' in mysite.pruned
-#print('prune_uri() OK')
-#print('prune_uri() FAIL')
+try:
+  mysite.prune_uris(list)
+  assert len(mysite.pruned) == 4
+  assert 'http://site.com/link.html' in mysite.pruned
+  assert 'http://site.com/site.html' in mysite.pruned
+  assert 'https://site.com/index.html' in mysite.pruned
+  assert 'http://mysite.com/static.html' in mysite.pruned
+  print('prune_uri() OK')
+except:
+  print('prune_uri() FAIL')
