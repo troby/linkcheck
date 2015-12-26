@@ -30,7 +30,7 @@ def remove_nonhttp_uri(list):
       new_list.append(url)
       continue
     if ':' in url:
-      if 'http' in url:
+      if ('http://' in url) or ('https://' in url):
         new_list.append(url)
   return new_list
 
