@@ -12,7 +12,7 @@ list = [
 
 # class initialization
 try:
-  mysite = check.SiteChecker('http://mysite.com/')
+  mysite = check.SiteChecker('mysite.com')
   assert mysite.url == 'http://mysite.com/'
   assert mysite.visited == []
   assert mysite.missing == []
