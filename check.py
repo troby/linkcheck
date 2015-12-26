@@ -14,3 +14,13 @@ def remove_duplicates(list):
       new_list.append(url)
   return new_list
 # remove non-http URIs
+def remove_nonhttp_uri(list):
+  new_list=[]
+  for url in list:
+    if ':' not in url:
+      new_list.append(url)
+      continue
+    if ':' in url:
+      if 'http' in url:
+        new_list.append(url)
+  return new_list
