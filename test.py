@@ -1,5 +1,5 @@
 #!/usr/local/bin/python3.4
-import check
+import check, sys
 
 list = [
   'http://site.com/link.html',
@@ -10,35 +10,23 @@ list = [
   'javascript:void(0)',
 ]
 
-try:
-  new = check.remove_duplicates(list)
-  assert len(new) == 5
-  assert 'http://site.com/link.html' in new
-  assert 'http://site.com/site.html' in new
-  assert 'https://site.com/index.html' in new
-  assert 'javascript:void(0)' in new
-  assert 'static.html' in new
-  print('remove_duplicates() OK')
-except:
-  print('remove_duplicates() FAIL')
-
-try:
-  new = check.remove_nonhttp_uri(list)
-  assert len(new) == 5
-  assert 'http://site.com/link.html' in list
-  assert 'http://site.com/site.html' in list
-  assert 'https://site.com/index.html' in list
-  assert 'http://site.com/link.html' in list
-  assert 'static.html' in list
-  print('remove_nonhttp_uri() OK')
-except:
-  print('remove_nonhttp_uri() FAIL')
-
+# class initialization
 try:
   mysite = check.SiteChecker('http://mysite.com/')
   assert mysite.url == 'http://mysite.com/'
   assert mysite.visited == []
   assert mysite.missing == []
-  print('SiteChecker class OK')
+  print('class initialization OK')
 except:
-  print('SiteChecker class FAIL')
+  print('class initialization FAIL')
+  sys.exit(1)
+
+# test uri pruning
+mysite.prune_uris(list)
+assert len(mysite.pruned) == 4
+assert 'http://site.com/link.html' in mysite.pruned
+assert 'http://site.com/site.html' in mysite.pruned
+assert 'https://site.com/index.html' in mysite.pruned
+assert 'http://mysite.com/static.html' in mysite.pruned
+#print('prune_uri() OK')
+#print('prune_uri() FAIL')
