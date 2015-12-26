@@ -33,3 +33,12 @@ try:
   print('remove_nonhttp_uri() OK')
 except:
   print('remove_nonhttp_uri() FAIL')
+
+try:
+  mysite = check.SiteChecker('http://mysite.com/')
+  assert mysite.url == 'http://mysite.com/'
+  assert mysite.visited == []
+  assert mysite.missing == []
+  print('SiteChecker class OK')
+except:
+  print('SiteChecker class FAIL')
