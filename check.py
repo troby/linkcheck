@@ -1,9 +1,18 @@
 #!/usr/local/bin/python3.4
 import requests, re, bs4
 
-# request index
+# globals
+visited = []
+missing = []
+
+# request page
 # get all anchors
 # find hrefs
+# clean urls
+# save urls
+# crawl urls for more urls
+# remove previously visited urls
+# track 404s
 
 # clean url list
 # remove duplicates
@@ -24,3 +33,9 @@ def remove_nonhttp_uri(list):
       if 'http' in url:
         new_list.append(url)
   return new_list
+
+def main():
+  return True
+
+if __name__ == '__main__':
+  main()
