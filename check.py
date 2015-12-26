@@ -2,8 +2,18 @@
 import requests, re, bs4
 
 # globals
-visited = []
-missing = []
+class SiteChecker:
+  '''
+    Tool for checking links of a site.
+    Invoke with check = SiteChecker('http://mysite.com')
+    self.url:     string containing base url of site to check
+    self.visited: list of urls already visited
+    self.missing: list of urls resulting in 404 response
+  '''
+  def __init__(self, url):
+    self.url = url
+  visited = []
+  missing = []
 
 # request page
 # get all anchors
@@ -33,9 +43,3 @@ def remove_nonhttp_uri(list):
       if ('http://' in url) or ('https://' in url):
         new_list.append(url)
   return new_list
-
-def main():
-  return True
-
-if __name__ == '__main__':
-  main()
