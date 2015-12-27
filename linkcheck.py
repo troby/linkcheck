@@ -32,6 +32,9 @@ class SiteChecker:
     self.missing = []
     self.pruned  = []
 
+  def start(self):
+    self.scrape_url(self.sitename)
+
   def prune_uris(self, list):
     '''
       Take a list of anchor href links and cleanup as follows:
