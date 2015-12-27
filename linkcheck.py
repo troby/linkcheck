@@ -5,11 +5,12 @@ class SiteChecker:
   '''
     Tool for checking links of a site.
     Invoke with check = SiteChecker('mysite.com').
-    self.sitename:     string containing base url of site to check
-    self.visited:      list of urls already visited
-    self.missing:      list of urls resulting in 404 response
-    self.pruned:       list of prepared uris for testing
-    self.last_status:  status code of most recent request
+    self.sitename:      string containing base url of site to check
+    self.visited:       list of urls already visited
+    self.missing:       list of urls resulting in 404 response
+    self.pruned:        list of prepared uris for testing
+    self.last_status:   status code of most recent request
+    self.last_encoding: encoding of most recent request
   '''
 
   def __init__(self, url):
@@ -63,6 +64,7 @@ class SiteChecker:
     try:
       r=requests.get(self.sitename)
       self.last_status = r.status_code
+      self.last_encoding = r.encoding
       if r.status_code != 200:
         print('%s error: %s' % (self.sitename, str(r.status_code)))
         return 1
