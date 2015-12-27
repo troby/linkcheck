@@ -67,3 +67,14 @@ try:
   print('test html path OK')
 except:
   print('test html path FAIL')
+
+# test is_local()
+try:
+  assert mysite.is_local('http://site.com/link.html') is False
+  assert mysite.is_local('http://site.com/site.html') is False
+  assert mysite.is_local('https://site.com/index.html') is False
+  assert mysite.is_local('http://mysite.com/static.html') is True
+  assert mysite.is_local('http://mysite.com/about.html') is True
+  print('test is_local() OK')
+except:
+  print('test is_local() FAIL')
