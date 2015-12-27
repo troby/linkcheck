@@ -41,9 +41,8 @@ class SiteChecker:
         * remove any links found in self.visited
     '''
     for url in list:
-      if url not in self.pruned:
-        if url not in self.visited:
-          self.pruned.append(url)
+      if (url not in self.pruned) and (url not in self.visited):
+        self.pruned.append(url)
 
     for url in self.pruned:
       if ':' not in url:
