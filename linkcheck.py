@@ -22,10 +22,9 @@ class SiteChecker:
     if not re.match(r'.*/$', url):
       url = url + '/'
     self.sitename = url
-
-  visited = []
-  missing = []
-  pruned  = []
+    self.visited = [self.sitename]
+    self.missing = []
+    self.pruned  = []
 
   def prune_uris(self, list):
     '''
@@ -37,6 +36,7 @@ class SiteChecker:
     for url in list:
       if url not in self.pruned:
         self.pruned.append(url)
+    self.pruned.remove(self.sitename)
     list = self.pruned
     self.pruned = []
     for url in list:
@@ -56,4 +56,3 @@ class SiteChecker:
 # crawl urls for more urls
 # remove previously visited urls
 # verify external links exist, but do not crawl those pages
-# remove reoccurances of sitename

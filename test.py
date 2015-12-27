@@ -9,13 +9,14 @@ list = [
   'static.html',
   '/about.html',
   'javascript:void(0)',
+  'http://mysite.com/',
 ]
 
 # class initialization
 try:
   mysite = linkcheck.SiteChecker('mysite.com')
   assert mysite.sitename == 'http://mysite.com/'
-  assert mysite.visited == []
+  assert mysite.visited == ['http://mysite.com/']
   assert mysite.missing == []
   print('class initialization OK')
 except:
