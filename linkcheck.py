@@ -37,7 +37,7 @@ class SiteChecker:
     self.pruned  = []
 
   def start(self):
-    self.scrape_url(self.sitename)
+    return self.scrape_url(self.sitename)
 
   def prune_uris(self, list):
     '''
@@ -71,17 +71,16 @@ class SiteChecker:
       self.last_encoding = r.encoding
       if r.status_code != 200:
         print('%s error: %s' % (self.sitename, str(r.status_code)))
-        return 1
+        return False
     except:
-      print('request failed: %s' % self.sitename)
-      return 1
+      return False
 
     bs = bs4.BeautifulSoup(r.text, 'html.parser')
     list = []
     for url in bs.find_all('a'):
       list.append(url.get('href'))
     self.prune_uris(list)
-    return 0
+    return True
 
   def test_link(self, url):
     '''
