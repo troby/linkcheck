@@ -42,23 +42,17 @@ class SiteChecker:
     '''
     for url in list:
       if url not in self.pruned:
-        self.pruned.append(url)
-    if self.sitename in self.pruned:
-      self.pruned.remove(self.sitename)
-    list = self.pruned
-    self.pruned = []
-    for url in list:
-      if ':' not in url:
-        url = re.sub('^/+', '', url)
-        url = self.base_url + url
-        self.pruned.append(url)
-        continue
-      if ':' in url:
-        if ('http://' in url) or ('https://' in url):
+        if url not in self.visited:
           self.pruned.append(url)
+
     for url in self.pruned:
-      if url in self.visited:
-        self.pruned.remove(url)
+      if ':' not in url:
+        index = self.pruned.index(url)
+        trimmed = re.sub('^/+', '', url)
+        self.pruned[index] = self.base_url + trimmed
+      else:
+        if ('http://' not in url) and ('https://' not in url):
+          self.pruned.remove(url)
 
   def check_site(self):
     '''
@@ -81,6 +75,14 @@ class SiteChecker:
     for url in bs.find_all('a'):
       list.append(url.get('href'))
     self.prune_uris(list)
+
+  def test_link(self, url):
+    '''
+      Check link.
+      Handle response.
+      If known text encoding scrape for more links.
+      Add link to visited and status dict.
+    '''
 
 ### TODO ###
 # crawl urls for more urls
