@@ -4,7 +4,11 @@ import requests, re, bs4
 class SiteChecker:
   '''
     Tool for checking links of a site.
-    Invoke with check = SiteChecker('mysite.com').
+
+    Usage:
+      check = linkcheck.SiteChecker('mysite.com')
+      check.start()
+
     self.sitename:      string containing submitted site to check
     self.base_url:      string containing base url of site
     self.visited:       list of urls already visited
