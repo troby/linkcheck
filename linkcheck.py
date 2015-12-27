@@ -16,6 +16,7 @@ class SiteChecker:
     self.pruned:        list of prepared uris for testing
     self.last_status:   status code of most recent request
     self.last_encoding: encoding of most recent request
+    self.verbose:	set to True for more information
   '''
 
   def __init__(self, url):
@@ -35,6 +36,7 @@ class SiteChecker:
     self.visited = [self.sitename, tmp, self.base_url]
     self.missing = []
     self.pruned  = []
+    self.verbose = False
 
   def start(self):
     return self.check_url(self.sitename)
@@ -60,12 +62,23 @@ class SiteChecker:
         if ('http://' not in url) and ('https://' not in url):
           self.pruned.remove(url)
 
+  def is_local(self, url):
+    '''
+      Test if url is part of base site being tested.
+    '''
+    if self.base_url in url:
+      return True
+    else:
+      return False
+
   def check_url(self, url):
     '''
       Create request for self.sitename and handle response.
       Pass off to scrape_url if valid encoding.
     '''
     try:
+      if self.verbose:
+        print('trying %s' % url)
       r=requests.get(url, stream=True)
       self.last_status = r.status_code
       self.last_encoding = r.encoding
