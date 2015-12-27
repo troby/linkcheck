@@ -53,13 +53,13 @@ class SiteChecker:
         if ('http://' not in url) and ('https://' not in url):
           self.pruned.remove(url)
 
-  def check_site(self):
+  def scrape_url(self, url):
     '''
       Create request for self.sitename and handle response. Compile
       raw list of scraped links and run them through prune_uris().
     '''
     try:
-      r=requests.get(self.sitename)
+      r=requests.get(url)
       self.last_status = r.status_code
       self.last_encoding = r.encoding
       if r.status_code != 200:
@@ -74,6 +74,7 @@ class SiteChecker:
     for url in bs.find_all('a'):
       list.append(url.get('href'))
     self.prune_uris(list)
+    return 0
 
   def test_link(self, url):
     '''
