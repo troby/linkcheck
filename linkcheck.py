@@ -49,7 +49,7 @@ class SiteChecker:
     for url in list:
       if ':' not in url:
         url = re.sub('^/+', '', url)
-        url = self.sitename + url
+        url = self.base_url + url
         self.pruned.append(url)
         continue
       if ':' in url:
