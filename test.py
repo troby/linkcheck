@@ -1,5 +1,5 @@
 #!/usr/local/bin/python3.4
-import check, sys
+import linkcheck, sys
 
 list = [
   'http://site.com/link.html',
@@ -13,7 +13,7 @@ list = [
 
 # class initialization
 try:
-  mysite = check.SiteChecker('mysite.com')
+  mysite = linkcheck.SiteChecker('mysite.com')
   assert mysite.sitename == 'http://mysite.com/'
   assert mysite.visited == []
   assert mysite.missing == []
