@@ -21,7 +21,7 @@ class SiteChecker:
     '''
     if not re.match(r'^http(s)?://.*', url):
       url = 'http://' + url
-    if not re.match(r'.*/$', url):
+    if not (re.match(r'.*/$', url)) and not (re.match(r'.*(htm|html)$', url)):
       url = url + '/'
     self.sitename = url
     self.visited = [self.sitename]
