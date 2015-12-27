@@ -1,5 +1,5 @@
 #!/usr/local/bin/python3.4
-import requests, re, bs4
+import requests, re, bs4, sys
 
 class SiteChecker:
   '''
@@ -9,6 +9,7 @@ class SiteChecker:
     self.visited:      list of urls already visited
     self.missing:      list of urls resulting in 404 response
     self.pruned:       list of prepared uris for testing
+    self.last_status:  status code of most recent request
   '''
 
   def __init__(self, url):
@@ -52,6 +53,16 @@ class SiteChecker:
     for url in self.pruned:
       if url in self.visited:
         self.pruned.remove(url)
+
+  def check_site(self):
+    try:
+      r=requests.get(self.sitename)
+      self.last_status = r.status_code
+      if r.status_code != 200:
+        print('%s error: %s' % (self.sitename, str(r.status_code)))
+        sys.exit(1)
+    except:
+      print('request failed: %s' % self.sitename)
 
 ### TODO ###
 # request page
