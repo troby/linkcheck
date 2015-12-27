@@ -48,3 +48,12 @@ try:
   print('remove visited OK')
 except:
   print('remove visited FAIL')
+
+# test sitename with html path
+try:
+  mysite = linkcheck.SiteChecker('mysite.com/index.html')
+  assert mysite.sitename == 'http://mysite.com/index.html'
+  assert mysite.domain == 'mysite.com'
+  print('set self.domain OK')
+except:
+  print('set self.domain FAIL')
