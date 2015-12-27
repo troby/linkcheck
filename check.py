@@ -6,10 +6,10 @@ class SiteChecker:
   '''
     Tool for checking links of a site.
     Invoke with check = SiteChecker('http://mysite.com')
-    self.url:     string containing base url of site to check
-    self.visited: list of urls already visited
-    self.missing: list of urls resulting in 404 response
-    self.pruned:  list of prepared uris for testing
+    self.sitename:     string containing base url of site to check
+    self.visited:      list of urls already visited
+    self.missing:      list of urls resulting in 404 response
+    self.pruned:       list of prepared uris for testing
   '''
 
   def __init__(self, url):
@@ -17,7 +17,7 @@ class SiteChecker:
       url = 'http://' + url
     if not re.match(r'.*/$', url):
       url = url + '/'
-    self.url = url
+    self.sitename = url
 
   visited = []
   missing = []
@@ -33,7 +33,7 @@ class SiteChecker:
     for url in list:
       if ':' not in url:
         url = re.sub('^/+', '', url)
-        url = self.url + url
+        url = self.sitename + url
         self.pruned.append(url)
         continue
       if ':' in url:
