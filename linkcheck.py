@@ -83,8 +83,8 @@ class SiteChecker:
     self.prune_uris(list)
 
 ### TODO ###
-# get all anchors
-# find hrefs
 # crawl urls for more urls
 # remove previously visited urls
 # verify external links exist, but do not crawl those pages
+# use encoding to differentiate between downloads and pages
+# verify downloads but do not fetch them
