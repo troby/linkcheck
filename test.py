@@ -31,6 +31,6 @@ try:
   assert 'https://site.com/index.html' in mysite.pruned
   assert 'http://mysite.com/static.html' in mysite.pruned
   assert 'http://mysite.com/about.html' in mysite.pruned
-  print('prune_uri() OK')
+  print('prune_uris() OK')
 except:
-  print('prune_uri() FAIL')
+  print('prune_uris() FAIL')
