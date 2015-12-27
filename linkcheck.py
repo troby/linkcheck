@@ -4,7 +4,7 @@ import requests, re, bs4, sys
 class SiteChecker:
   '''
     Tool for checking links of a site.
-    Invoke with check = SiteChecker('mysite.com')
+    Invoke with check = SiteChecker('mysite.com').
     self.sitename:     string containing base url of site to check
     self.visited:      list of urls already visited
     self.missing:      list of urls resulting in 404 response
@@ -29,7 +29,7 @@ class SiteChecker:
 
   def prune_uris(self, list):
     '''
-      take a list of anchor href links and cleanup as follows:
+      Take a list of anchor href links and cleanup as follows:
         * remove duplicates
         * convert relative paths to absolute URIs
         * forget about non-HTTP URI paths - like javascript:void()
@@ -55,6 +55,10 @@ class SiteChecker:
         self.pruned.remove(url)
 
   def check_site(self):
+    '''
+      Create request for self.sitename and handle response. Compile
+      raw list of scraped links and run them through prune_uris().
+    '''
     try:
       r=requests.get(self.sitename)
       self.last_status = r.status_code
@@ -65,7 +69,6 @@ class SiteChecker:
       print('request failed: %s' % self.sitename)
 
 ### TODO ###
-# request page
 # get all anchors
 # find hrefs
 # crawl urls for more urls
