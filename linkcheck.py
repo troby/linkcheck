@@ -113,6 +113,3 @@ class SiteChecker:
 ### TODO ###
 # crawl urls for more urls
 # remove previously visited urls
-# verify external links exist, but do not crawl those pages
-# use encoding to differentiate between downloads and pages
-# verify downloads but do not fetch them
