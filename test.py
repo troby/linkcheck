@@ -14,7 +14,7 @@ list = [
 # class initialization
 try:
   mysite = check.SiteChecker('mysite.com')
-  assert mysite.url == 'http://mysite.com/'
+  assert mysite.sitename == 'http://mysite.com/'
   assert mysite.visited == []
   assert mysite.missing == []
   print('class initialization OK')
