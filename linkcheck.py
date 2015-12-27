@@ -37,7 +37,7 @@ class SiteChecker:
     self.pruned  = []
 
   def start(self):
-    return self.scrape_url(self.sitename)
+    return self.check_url(self.sitename)
 
   def prune_uris(self, list):
     '''
@@ -60,35 +60,42 @@ class SiteChecker:
         if ('http://' not in url) and ('https://' not in url):
           self.pruned.remove(url)
 
-  def scrape_url(self, url):
+  def check_url(self, url):
     '''
-      Create request for self.sitename and handle response. Compile
-      raw list of scraped links and run them through prune_uris().
+      Create request for self.sitename and handle response.
+      Pass off to scrape_url if valid encoding.
     '''
     try:
-      r=requests.get(url)
+      r=requests.get(url, stream=True)
       self.last_status = r.status_code
       self.last_encoding = r.encoding
-      if r.status_code != 200:
-        print('%s error: %s' % (self.sitename, str(r.status_code)))
+      if (r.status_code != 200) and (r.status_code != 404):
+        print('%s error: %s' % (url, str(r.status_code)))
         return False
     except:
+      r.close()
       return False
+    if url != self.sitename:
+      self.visited.append(url)
+    if self.last_status == 404:
+      self.missing.append(url)
+      r.close()
+      return True
+    if self.last_encoding.upper() in self.encodings:
+      rv = self.scrape_url(r.text)
+      r.close()
+      return rv
 
-    bs = bs4.BeautifulSoup(r.text, 'html.parser')
+  def scrape_url(self, links):
+    '''
+      Compile raw list of scraped links and run them through prune_uris().
+    '''
+    bs = bs4.BeautifulSoup(links, 'html.parser')
     list = []
     for url in bs.find_all('a'):
       list.append(url.get('href'))
     self.prune_uris(list)
     return True
-
-  def test_link(self, url):
-    '''
-      Check link.
-      Handle response.
-      If known text encoding scrape for more links.
-      Add link to visited and status dict.
-    '''
 
 ### TODO ###
 # crawl urls for more urls
