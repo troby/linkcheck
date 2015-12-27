@@ -38,7 +38,8 @@ class SiteChecker:
     for url in list:
       if url not in self.pruned:
         self.pruned.append(url)
-    self.pruned.remove(self.sitename)
+    if self.sitename in self.pruned:
+      self.pruned.remove(self.sitename)
     list = self.pruned
     self.pruned = []
     for url in list:
@@ -68,6 +69,12 @@ class SiteChecker:
     except:
       print('request failed: %s' % self.sitename)
       return 1
+
+    bs = bs4.BeautifulSoup(r.text, 'html.parser')
+    list = []
+    for url in bs.find_all('a'):
+      list.append(url.get('href'))
+    self.prune_uris(list)
 
 ### TODO ###
 # get all anchors
