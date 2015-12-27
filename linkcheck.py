@@ -94,7 +94,7 @@ class SiteChecker:
       self.missing.append(url)
       r.close()
       return True
-    if self.last_encoding.upper() in self.encodings:
+    if (self.last_encoding.upper() in self.encodings) and (self.is_local(url)):
       rv = self.scrape_url(r.text)
       r.close()
       return rv
