@@ -32,6 +32,7 @@ class SiteChecker:
         * remove duplicates
         * convert relative paths to absolute URIs
         * forget about non-HTTP URI paths - like javascript:void()
+        * remove any links found in self.visited
     '''
     for url in list:
       if url not in self.pruned:
@@ -48,6 +49,9 @@ class SiteChecker:
       if ':' in url:
         if ('http://' in url) or ('https://' in url):
           self.pruned.append(url)
+    for url in self.pruned:
+      if url in self.visited:
+        self.pruned.remove(url)
 
 ### TODO ###
 # request page

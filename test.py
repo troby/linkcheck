@@ -36,3 +36,15 @@ try:
   print('prune_uris() OK')
 except:
   print('prune_uris() FAIL')
+
+# test removal of visited links
+try:
+  mysite.visited.append('http://mysite.com/visited.html')
+  mysite.pruned = []
+  list.append('http://mysite.com/visited.html')
+  mysite.prune_uris(list)
+  assert len(mysite.pruned) == 5
+  assert 'http://mysite.com/visited.html' not in mysite.pruned
+  print('remove visited OK')
+except:
+  print('remove visited FAIL')
