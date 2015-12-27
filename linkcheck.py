@@ -1,5 +1,5 @@
 #!/usr/local/bin/python3.4
-import requests, re, bs4, sys
+import requests, re, bs4
 
 class SiteChecker:
   '''
@@ -64,9 +64,10 @@ class SiteChecker:
       self.last_status = r.status_code
       if r.status_code != 200:
         print('%s error: %s' % (self.sitename, str(r.status_code)))
-        sys.exit(1)
+        return 1
     except:
       print('request failed: %s' % self.sitename)
+      return 1
 
 ### TODO ###
 # get all anchors
