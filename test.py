@@ -64,6 +64,6 @@ try:
   assert 'https://site.com/index.html' in mysite.pruned
   assert 'http://mysite.com/static.html' in mysite.pruned
   assert 'http://mysite.com/about.html' in mysite.pruned
-  print('set self.domain OK')
+  print('test html path OK')
 except:
-  print('set self.domain FAIL')
+  print('test html path FAIL')
