@@ -24,9 +24,10 @@ class SiteChecker:
       url = 'http://' + url
     if not (re.match(r'.*/$', url)) and not (re.match(r'.*(htm|html)$', url)):
       url = url + '/'
+    base_url = re.sub(r'^([htps]+://[^/]+)/.*', '\\1', url)
     self.sitename = url
     self.domain = re.sub(r'^[htps]+://([^/]+)/.*', '\\1', url)
-    self.visited = [self.sitename]
+    self.visited = [self.sitename, base_url, base_url + '/']
     self.missing = []
     self.pruned  = []
 
