@@ -18,6 +18,7 @@ try:
   assert mysite.sitename == 'http://mysite.com/'
   assert mysite.visited == ['http://mysite.com/']
   assert mysite.missing == []
+  assert mysite.pruned == []
   print('class initialization OK')
 except:
   print('class initialization FAIL')
