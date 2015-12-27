@@ -5,8 +5,8 @@ class SiteChecker:
   '''
     Tool for checking links of a site.
     Invoke with check = SiteChecker('mysite.com').
-    self.sitename:      string containing base url of site to check
-    self.domain:        string containing [host.]domain.tld of site
+    self.sitename:      string containing submitted site to check
+    self.base_url:      string containing base url of site
     self.visited:       list of urls already visited
     self.missing:       list of urls resulting in 404 response
     self.pruned:        list of prepared uris for testing
@@ -24,10 +24,10 @@ class SiteChecker:
       url = 'http://' + url
     if not (re.match(r'.*/$', url)) and not (re.match(r'.*(htm|html)$', url)):
       url = url + '/'
-    base_url = re.sub(r'^([htps]+://[^/]+)/.*', '\\1', url)
     self.sitename = url
-    self.domain = re.sub(r'^[htps]+://([^/]+)/.*', '\\1', url)
-    self.visited = [self.sitename, base_url, base_url + '/']
+    self.base_url = re.sub(r'^([htps]+://[^/]+/).*', '\\1', url)
+    tmp = re.sub(r'^(.*)/$', '\\1', self.base_url)
+    self.visited = [self.sitename, tmp, self.base_url]
     self.missing = []
     self.pruned  = []
 
