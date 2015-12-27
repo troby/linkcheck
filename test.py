@@ -7,6 +7,7 @@ list = [
   'https://site.com/index.html',
   'http://site.com/link.html',
   'static.html',
+  '/about.html',
   'javascript:void(0)',
 ]
 
@@ -24,11 +25,12 @@ except:
 # test uri pruning
 try:
   mysite.prune_uris(list)
-  assert len(mysite.pruned) == 4
+  assert len(mysite.pruned) == 5
   assert 'http://site.com/link.html' in mysite.pruned
   assert 'http://site.com/site.html' in mysite.pruned
   assert 'https://site.com/index.html' in mysite.pruned
   assert 'http://mysite.com/static.html' in mysite.pruned
+  assert 'http://mysite.com/about.html' in mysite.pruned
   print('prune_uri() OK')
 except:
   print('prune_uri() FAIL')
