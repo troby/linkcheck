@@ -27,7 +27,7 @@ class SiteChecker:
     '''
     if not re.match(r'^http(s)?://.*', url):
       url = 'http://' + url
-    if not (re.match(r'.*/$', url)) and not (re.match(r'.*(htm|html)$', url)):
+    if not (re.match(r'.*/$', url)) and not (re.match(r'.*(htm|html|php)$', url)):
       url = url + '/'
     self.sitename = url
     self.base_url = re.sub(r'^([htps]+://[^/]+/).*', '\\1', url)
