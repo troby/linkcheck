@@ -1,11 +1,9 @@
 #!/usr/local/bin/python3.4
 import linkcheck
 
-lc=linkcheck.SiteChecker('google.com')
-if lc.start():
-  print('%s: %s' % (lc.sitename, lc.last_status))
-  print('encoding: %s' % lc.last_encoding)
-  import pprint
-  pprint.pprint(lc.pruned)
-else:
-  print('scrape failed: %s' % lc.sitename)
+lc=linkcheck.SiteChecker('127.0.0.1')
+lc.start()
+assert lc.last_status == 200
+assert len(lc.pruned) == 2
+assert 'http://127.0.0.1/download.html' in lc.pruned
+assert 'http://127.0.0.1/missing_1.html' in lc.pruned
