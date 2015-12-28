@@ -34,7 +34,9 @@ class SiteChecker:
     self.base_url = re.sub(r'^([htps]+://[^/]+/).*', '\\1', url)
     tmp = re.sub(r'^(.*)/$', '\\1', self.base_url)
     self.encodings = ['ISO-8859-1', 'UTF-8']
-    self.visited = [self.sitename, tmp, self.base_url]
+    self.visited = [self.sitename, tmp]
+    if self.sitename != self.base_url:
+      self.visited.append(self.base_url)
     self.missing = []
     self.pruned  = []
     self.verbose = False
