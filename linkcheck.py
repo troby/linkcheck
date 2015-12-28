@@ -73,8 +73,9 @@ class SiteChecker:
 
   def check_url(self, url):
     '''
-      Create request for self.sitename and handle response.
-      Pass off to scrape_url if valid encoding.
+      Create request for url and handle response.
+      Pass off to scrape_hrefs if valid encoding.
+      Return boolean result.
     '''
     try:
       if self.verbose:
@@ -95,11 +96,11 @@ class SiteChecker:
       r.close()
       return True
     if (self.last_encoding.upper() in self.encodings) and (self.is_local(url)):
-      rv = self.scrape_url(r.text)
+      rv = self.scrape_hrefs(r.text)
       r.close()
       return rv
 
-  def scrape_url(self, links):
+  def scrape_hrefs(self, links):
     '''
       Compile raw list of scraped links and run them through prune_uris().
     '''
