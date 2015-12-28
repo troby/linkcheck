@@ -14,10 +14,16 @@ list = [
 
 # class initialization
 try:
+  mysite = linkcheck.SiteChecker('mysite.com/path.html')
+  assert mysite.sitename == 'http://mysite.com/path.html'
+  assert mysite.base_url == 'http://mysite.com/'
+  assert mysite.visited == ['http://mysite.com/path.html','http://mysite.com', 'http://mysite.com/']
+  del mysite
+
   mysite = linkcheck.SiteChecker('mysite.com')
   assert mysite.sitename == 'http://mysite.com/'
   assert mysite.base_url == 'http://mysite.com/'
-  assert mysite.visited == ['http://mysite.com/','http://mysite.com','http://mysite.com/']
+  assert mysite.visited == ['http://mysite.com/','http://mysite.com']
   assert mysite.missing == []
   assert mysite.pruned == []
   print('class initialization OK')
