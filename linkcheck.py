@@ -86,7 +86,11 @@ class SiteChecker:
       return False
 
     self.last_status = r.status_code
+    if self.verbose:
+      print('response: %s' % r.status_code)
     self.last_encoding = r.encoding
+    if self.verbose:
+      print('encoding: %s' % r.encoding)
     if url not in self.visited:
       self.visited.append(url)
     if self.last_status == 404:
@@ -95,10 +99,11 @@ class SiteChecker:
       r.close()
       return False
 
-    if (r.encoding != '') and (self.is_local(url)):
-      self.scrape_hrefs(r.text)
-      r.close()
-      return True
+    if r.encoding and (self.is_local(url)):
+      if r.encoding.upper() in self.encodings:
+        self.scrape_hrefs(r.text)
+        r.close()
+        return True
 
   def scrape_hrefs(self, links):
     '''
