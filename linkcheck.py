@@ -14,8 +14,9 @@ class SiteChecker:
     self.visited:       list of urls already visited
     self.missing:       list of urls resulting in 404 response
     self.pruned:        list of prepared uris for testing
-    self.last_status:   status code of most recent request
-    self.last_encoding: encoding of most recent request
+    self.last_status:   status code of last response
+    self.last_encoding: encoding of last response
+    self.last_text:     text of last response or None
     self.verbose:	set to True for more information
   '''
 
@@ -39,7 +40,8 @@ class SiteChecker:
     self.verbose = False
 
   def start(self):
-    self.check_url(self.sitename)
+    if self.check_url(self.sitename):
+      self.scrape_hrefs()
 
   def prune_uris(self, list):
     '''
@@ -79,18 +81,27 @@ class SiteChecker:
       Pass off to scrape_hrefs if valid encoding.
       Return boolean result.
     '''
+    self.last_status = None
+    self.last_encoding = None
+    self.last_text = None
     if self.verbose:
       print('trying %s' % url)
     try:
       r=requests.get(url, stream=True)
+      self.last_status = r.status_code
+      self.last_encoding = r.encoding
+      if r.encoding and (self.is_local(url)):
+        if r.encoding.upper() in self.encodings:
+          self.last_text = r.text
+        else:
+          print('unknown encoding: %s' % r.encoding)
+      r.close()
     except:
       r.close()
       return False
 
-    self.last_status = r.status_code
     if self.verbose:
       print('response: %s' % r.status_code)
-    self.last_encoding = r.encoding
     if self.verbose:
       print('encoding: %s' % r.encoding)
 
@@ -103,27 +114,17 @@ class SiteChecker:
       if self.verbose:
         print('add to missing: %s' % url)
       self.missing.append(url)
-    if r.status_code != 200:
-      r.close()
+
+    if r.status_code == 200:
+      return True
+    else:
       return False
 
-    if r.encoding and (self.is_local(url)):
-      if r.encoding.upper() in self.encodings:
-        self.scrape_hrefs(r.text)
-        r.close()
-        return True
-      else:
-        print('unknown encoding: %s' % r.encoding)
-        return True
-    else:
-      r.close()
-      return True
-
-  def scrape_hrefs(self, links):
+  def scrape_hrefs(self):
     '''
       Compile raw list of scraped links and run them through prune_uris().
     '''
-    bs = bs4.BeautifulSoup(links, 'html.parser')
+    bs = bs4.BeautifulSoup(self.last_text, 'html.parser')
     list = []
     for url in bs.find_all('a'):
       list.append(url.get('href'))
