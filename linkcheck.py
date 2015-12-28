@@ -98,7 +98,8 @@ class SiteChecker:
       self.pruned.remove(url)
     if url not in self.visited:
       self.visited.append(url)
-    if self.last_status == 404:
+
+    if r.status_code == 404:
       if self.verbose:
         print('add to missing: %s' % url)
       self.missing.append(url)
@@ -111,6 +112,12 @@ class SiteChecker:
         self.scrape_hrefs(r.text)
         r.close()
         return True
+      else:
+        print('unknown encoding: %s' % r.encoding)
+        return True
+    else:
+      r.close()
+      return True
 
   def scrape_hrefs(self, links):
     '''
