@@ -39,7 +39,7 @@ class SiteChecker:
     self.verbose = False
 
   def start(self):
-    return self.check_url(self.sitename)
+    self.check_url(self.sitename)
 
   def prune_uris(self, list):
     '''
@@ -93,6 +93,9 @@ class SiteChecker:
     self.last_encoding = r.encoding
     if self.verbose:
       print('encoding: %s' % r.encoding)
+
+    if url in self.pruned:
+      self.pruned.remove(url)
     if url not in self.visited:
       self.visited.append(url)
     if self.last_status == 404:
