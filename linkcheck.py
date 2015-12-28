@@ -77,28 +77,28 @@ class SiteChecker:
       Pass off to scrape_hrefs if valid encoding.
       Return boolean result.
     '''
+    if self.verbose:
+      print('trying %s' % url)
     try:
-      if self.verbose:
-        print('trying %s' % url)
       r=requests.get(url, stream=True)
-      self.last_status = r.status_code
-      self.last_encoding = r.encoding
-      if (r.status_code != 200) and (r.status_code != 404):
-        print('%s error: %s' % (url, str(r.status_code)))
-        return False
     except:
       r.close()
       return False
-    if url != self.sitename:
+
+    self.last_status = r.status_code
+    self.last_encoding = r.encoding
+    if url not in self.visited:
       self.visited.append(url)
     if self.last_status == 404:
       self.missing.append(url)
+    if r.status_code != 200:
+      r.close()
+      return False
+
+    if (r.encoding != '') and (self.is_local(url)):
+      self.scrape_hrefs(r.text)
       r.close()
       return True
-    if (self.last_encoding.upper() in self.encodings) and (self.is_local(url)):
-      rv = self.scrape_hrefs(r.text)
-      r.close()
-      return rv
 
   def scrape_hrefs(self, links):
     '''
@@ -109,7 +109,6 @@ class SiteChecker:
     for url in bs.find_all('a'):
       list.append(url.get('href'))
     self.prune_uris(list)
-    return True
 
 ### TODO ###
 # crawl urls for more urls
