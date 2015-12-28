@@ -2,6 +2,7 @@
 import linkcheck
 
 lc=linkcheck.SiteChecker('127.0.0.1')
+lc.verbose=True
 lc.start()
 assert lc.last_status == 200
 assert len(lc.pruned) == 2
