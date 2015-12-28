@@ -51,6 +51,8 @@ class SiteChecker:
     '''
     for url in list:
       if (url not in self.pruned) and (url not in self.visited):
+        if self.verbose:
+          print('add to pruned: %s' % url)
         self.pruned.append(url)
 
     for url in self.pruned:
@@ -94,6 +96,8 @@ class SiteChecker:
     if url not in self.visited:
       self.visited.append(url)
     if self.last_status == 404:
+      if self.verbose:
+        print('add to missing: %s' % url)
       self.missing.append(url)
     if r.status_code != 200:
       r.close()
