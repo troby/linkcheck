@@ -44,6 +44,9 @@ class SiteChecker:
   def start(self):
     if self.check_url(self.sitename):
       self.scrape_hrefs()
+    while len(self.pruned) > 0:
+      if self.check_url(self.pruned[0]):
+        self.scrape_hrefs()
 
   def prune_uris(self, list):
     '''
@@ -117,7 +120,7 @@ class SiteChecker:
         print('add to missing: %s' % url)
       self.missing.append(url)
 
-    if r.status_code == 200:
+    if (r.status_code == 200) and (self.last_text):
       return True
     else:
       return False
