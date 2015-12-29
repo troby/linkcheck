@@ -1,5 +1,5 @@
 #!/usr/local/bin/python3.4
-import linkcheck, sys
+import linkcheck, sys, io
 
 list = [
   'http://site.com/link.html',
@@ -84,3 +84,25 @@ try:
   print('test is_local() OK')
 except:
   print('test is_local() FAIL')
+
+# test results()
+try:
+  del mysite
+  mysite = linkcheck.SiteChecker('mysite.com')
+  mysite.missing.append('http://mysite.com/missing.html')
+  mysite.missing.append('http://mysite.com/another.html')
+  expected_results = \
+    'missing links:\n' + \
+    mysite.missing[0] + '\n' + \
+    mysite.missing[1] + '\n'
+
+  cap_output=io.StringIO()
+  default_output=sys.stdout
+  sys.stdout=cap_output
+  mysite.results()
+  assert cap_output.getvalue() == expected_results
+  sys.stdout=default_output
+  print('results() output OK')
+except:
+  sys.stdout=default_output
+  print('results() output FAIL')
