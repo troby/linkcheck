@@ -1,0 +1,15 @@
+Basic tool for crawling a domain in search of missing links.
+
+Currently, this tool only saves 404 errors to a special list,
+but enabling verbose will provide output of every response
+status code.
+
+Usage:
+
+import linkcheck
+check = linkcheck.SiteChecker('mysite.com')
+check.start()
+
+The following defaults can be changed before invoking start():
+check.verbose = False
+check.delay = 3
