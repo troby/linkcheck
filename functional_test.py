@@ -3,6 +3,7 @@ import linkcheck
 
 lc=linkcheck.SiteChecker('127.0.0.1')
 lc.verbose=True
+lc.delay=0
 lc.start()
 lc.results()
 assert len(lc.visited) == 6
