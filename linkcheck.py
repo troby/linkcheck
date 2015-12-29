@@ -1,5 +1,5 @@
 #!/usr/local/bin/python3.4
-import requests, re, bs4
+import requests, re, bs4, time
 
 class SiteChecker:
   '''
@@ -8,6 +8,8 @@ class SiteChecker:
     Usage:
       check = linkcheck.SiteChecker('mysite.com')
       check.start()
+      check.verbose = True
+      check.delay = 20
 
     self.sitename:      string containing submitted site to check
     self.base_url:      string containing base url of site
@@ -18,6 +20,7 @@ class SiteChecker:
     self.last_encoding: encoding of last response
     self.last_text:     text of last response or None
     self.verbose:	set to True for more information
+    self.delay:         delay in seconds between each request (default 3)
   '''
 
   def __init__(self, url):
@@ -40,11 +43,13 @@ class SiteChecker:
     self.missing = []
     self.pruned  = []
     self.verbose = False
+    self.delay = 3
 
   def start(self):
     if self.check_url(self.sitename):
       self.scrape_hrefs()
     while len(self.pruned) > 0:
+      time.sleep(self.delay)
       if self.check_url(self.pruned[0]):
         self.scrape_hrefs()
 
