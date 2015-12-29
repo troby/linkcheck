@@ -4,6 +4,7 @@ import linkcheck
 lc=linkcheck.SiteChecker('127.0.0.1')
 lc.verbose=True
 lc.start()
+lc.results()
 assert len(lc.visited) == 6
 assert len(lc.missing) == 2
 assert len(lc.pruned) == 0

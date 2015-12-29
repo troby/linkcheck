@@ -10,6 +10,7 @@ class SiteChecker:
       check.verbose = True
       check.delay = 20
       check.start()
+      check.results()
 
     self.sitename:      string containing submitted site to check
     self.base_url:      string containing base url of site
@@ -52,6 +53,14 @@ class SiteChecker:
       time.sleep(self.delay)
       if self.check_url(self.pruned[0]):
         self.scrape_hrefs()
+
+  def results(self):
+    '''
+      Print out contents of self.missing list.
+    '''
+    print('missing links:')
+    for bad_url in self.missing:
+      print(bad_url)
 
   def prune_uris(self, list):
     '''
