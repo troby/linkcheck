@@ -2,7 +2,13 @@ Basic tool for crawling a domain in search of missing links.
 
 Currently, this tool only saves 404 errors to a special list,
 but enabling verbose will provide output of every response
-status code.
+status code. Linkcheck will verify external links, but it will
+not scrape them for further links to be tested.
+
+Dependencies:
+python3.x
+requests
+BeautifulSoup4
 
 Usage:
 
