@@ -1,4 +1,10 @@
-#!/usr/local/bin/python3.4
+# -*- coding: utf-8 -*-
+'''
+:copyright: (c) 2015 Ted Roby
+:license: BSD, see LICENSE for more details.
+
+'''
+
 import requests, re, bs4, time
 
 class SiteChecker:
