@@ -7,9 +7,9 @@ class SiteChecker:
 
     Usage:
       check = linkcheck.SiteChecker('mysite.com')
-      check.start()
       check.verbose = True
       check.delay = 20
+      check.start()
 
     self.sitename:      string containing submitted site to check
     self.base_url:      string containing base url of site
