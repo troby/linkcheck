@@ -13,3 +13,27 @@ check.start()
 The following defaults can be changed before invoking start():
 check.verbose = False
 check.delay = 3
+
+
+Functional test:
+The localhost site tested by functional_test.py should
+have the following files:
+
+download.html:
+<html>
+<body>
+<a href="test.mp3">music file</a>
+<a href="missing_2.html">missing</a>
+</body>
+</html>
+
+index.html:
+<html>
+<body>
+<a href="download.html">downloads</a>
+<a href="missing_1.html">missing</a>
+</body>
+</html>
+
+test.mp3:
+binary file data
