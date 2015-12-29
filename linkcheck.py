@@ -137,7 +137,3 @@ class SiteChecker:
     for url in bs.find_all('a'):
       list.append(url.get('href'))
     self.prune_uris(list)
-
-### TODO ###
-# crawl urls for more urls
-# remove previously visited urls
