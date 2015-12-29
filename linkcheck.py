@@ -1,5 +1,14 @@
 # -*- coding: utf-8 -*-
 '''
+Module for checking links of a site.
+
+Usage:
+  check = linkcheck.SiteChecker('mysite.com')
+  check.verbose = True
+  check.delay = 20
+  check.start()
+  check.results()
+
 :copyright: (c) 2015 Ted Roby
 :license: BSD, see LICENSE for more details.
 
@@ -9,15 +18,6 @@ import requests, re, bs4, time
 
 class SiteChecker:
   '''
-    Tool for checking links of a site.
-
-    Usage:
-      check = linkcheck.SiteChecker('mysite.com')
-      check.verbose = True
-      check.delay = 20
-      check.start()
-      check.results()
-
     self.sitename:      string containing submitted site to check
     self.base_url:      string containing base url of site
     self.visited:       list of urls already visited
