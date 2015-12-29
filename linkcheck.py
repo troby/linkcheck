@@ -59,8 +59,11 @@ class SiteChecker:
       Print out contents of self.missing list.
     '''
     print('missing links:')
-    for bad_url in self.missing:
-      print(bad_url)
+    if len(self.missing) > 0:
+      for bad_url in self.missing:
+        print(bad_url)
+    else:
+      print('None')
 
   def prune_uris(self, list):
     '''
