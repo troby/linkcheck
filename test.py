@@ -55,6 +55,8 @@ try:
   print('remove visited OK')
   list.remove('http://mysite.com/visited.html')
 except:
+  if 'http://mysite.com/visited.html' in list:
+    list.remove('http://mysite.com/visited.html')
   print('remove visited FAIL')
 
 # test sitename with html path
