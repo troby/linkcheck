@@ -95,8 +95,8 @@ class SiteChecker:
   def check_url(self, url):
     '''
       Create request for url and handle response.
-      Pass off to scrape_hrefs if valid encoding.
-      Return boolean result.
+      Return True if link is candidate for scraping.
+      Otherwise, return False.
     '''
     self.last_status = None
     self.last_encoding = None
